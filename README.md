@@ -2,7 +2,7 @@ wgt-telinput
 ===========
 Widget for Yii Framework 2.0
 
-[![Latest Stable Version](https://poser.pugx.org/panix/wgt-taginput/v/stable)](https://packagist.org/packages/panix/wgt-taginput) [![Total Downloads](https://poser.pugx.org/panix/wgt-taginput/downloads)](https://packagist.org/packages/panix/wgt-taginput) [![Monthly Downloads](https://poser.pugx.org/panix/wgt-taginput/d/monthly)](https://packagist.org/packages/panix/wgt-taginput) [![Daily Downloads](https://poser.pugx.org/panix/wgt-taginput/d/daily)](https://packagist.org/packages/panix/wgt-taginput) [![Latest Unstable Version](https://poser.pugx.org/panix/wgt-taginput/v/unstable)](https://packagist.org/packages/panix/wgt-taginput) [![License](https://poser.pugx.org/panix/wgt-taginput/license)](https://packagist.org/packages/panix/wgt-taginput)
+[![Latest Stable Version](https://poser.pugx.org/panix/wgt-telinput/v/stable)](https://packagist.org/packages/panix/wgt-telinput) [![Total Downloads](https://poser.pugx.org/panix/wgt-telinput/downloads)](https://packagist.org/packages/panix/wgt-telinput) [![Monthly Downloads](https://poser.pugx.org/panix/wgt-telinput/d/monthly)](https://packagist.org/packages/panix/wgt-telinput) [![Daily Downloads](https://poser.pugx.org/panix/wgt-telinput/d/daily)](https://packagist.org/packages/panix/wgt-telinput) [![Latest Unstable Version](https://poser.pugx.org/panix/wgt-telinput/v/unstable)](https://packagist.org/packages/panix/wgt-telinput) [![License](https://poser.pugx.org/panix/wgt-telinput/license)](https://packagist.org/packages/panix/wgt-telinput)
 
 Installation
 ------------
