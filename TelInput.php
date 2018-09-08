@@ -4,6 +4,7 @@
  *
  * @author PIXELION CMS development team <dev@pixelion.com.ua>
  * @link http://pixelion.com.ua PIXELION CMS
+ * @see https://github.com/jackocnr/intl-tel-input#options
  */
 
 namespace panix\ext\telinput;
@@ -19,7 +20,8 @@ class TelInput extends InputWidget
     public $placeholder;
     public $utils = true;
     public $jsOptions = [
-        'preferredCountries' => ['ua', 'ru']
+        'preferredCountries' => ['ua', 'ru'],
+
     ];
 
     public function run()
@@ -42,7 +44,7 @@ class TelInput extends InputWidget
         $assets = Asset::register($view);
 
         if ($this->utils) {
-            $this->jsOptions['utilsScript'] = $assets->baseUrl . 'js/utils.js';
+            $this->jsOptions['utilsScript'] = $assets->baseUrl . '/js/utils.js';
         }
 
         //$this->jsOptions['initialCountry']= "auto";
@@ -56,6 +58,7 @@ class TelInput extends InputWidget
 
 
         $jsOptions = Json::encode($this->jsOptions);
+        //$js[] = "$('#{$this->options['id']}').intlTelInput({utilsScript:'$assets->baseUrl/js/utils.js'});";
         $js[] = "$('#{$this->options['id']}').intlTelInput({$jsOptions});";
         $view->registerJs(implode("\n", $js));
     }
