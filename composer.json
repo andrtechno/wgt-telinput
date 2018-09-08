@@ -4,7 +4,7 @@
     "keywords": ["pixelion-cms", "extension", "widget", "form", "telinput"],
     "homepage": "https://github.com/andrtechno/wgt-telinput",
     "type": "extension",
-    "license": "BSD 3-Clause",
+    "license": "MIT",
     "authors": [
         {
             "name": "PIXELION CMS",
