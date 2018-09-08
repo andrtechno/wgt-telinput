@@ -31,7 +31,7 @@ Once the extension is installed, simply use it in your code by :
 
 ```php
 <?php
-        $form->field($model, 'text')->widget(TelInput::className(), [
+        $form->field($model, 'text')->widget(TelInput::class, [
             'options' => [],
         ]);
  ?>

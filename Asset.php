@@ -2,25 +2,27 @@
 
 /**
  *
- * taginput
+ * telinput
  *
  * @author PIXELION CMS development team <dev@pixelion.com.ua>
  * @link http://pixelion.com.ua PIXELION CMS
  */
 
-namespace panix\ext\taginput;
+namespace panix\ext\telinput;
 
 use yii\web\AssetBundle;
 
 class Asset extends AssetBundle {
 
-    public $sourcePath = '@vendor/panix/wgt-taginput/assets';
+    public $sourcePath = '@vendor/jackocnr/intl-tel-input/build';
     
-    public $css = ['css/jquery.tag-editor.css'];
+    public $css = [
+        YII_ENV_DEV ? 'css/intlTelInput.css' : 'css/intlTelInput.min.css',
+    ];
     
     public $js = [
-        YII_ENV_DEV ? 'js/jquery.tag-editor.js' : 'js/jquery.tag-editor.min.js',
-        'js/jquery.caret.min.js'
+        YII_ENV_DEV ? 'js/intlTelInput.js' : 'js/intlTelInput.min.js',
+        'js/utils.js'
     ];
     public $depends = [
         'yii\jui\JuiAsset',

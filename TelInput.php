@@ -6,7 +6,7 @@
  * @link http://pixelion.com.ua PIXELION CMS
  */
 
-namespace panix\ext\taginput;
+namespace panix\ext\telinput;
 
 use Yii;
 use yii\helpers\Html;
@@ -18,6 +18,7 @@ class TelInput extends InputWidget {
     public $placeholder;
 
     public function run() {
+        $this->options['type']='tel';
         if ($this->hasModel()) {
             echo Html::activeTextInput($this->model, $this->attribute, $this->options);
         } else {
