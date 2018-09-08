@@ -9,16 +9,25 @@
 namespace panix\ext\telinput;
 
 use Yii;
-use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\widgets\InputWidget;
+use panix\engine\Html;
 
-class TelInput extends InputWidget {
+class TelInput extends InputWidget
+{
 
     public $placeholder;
+    public $utils = true;
+    public $jsOptions = [
+        'preferredCountries' => ['ua', 'ru']
+    ];
 
-    public function run() {
-        $this->options['type']='tel';
+    public function run()
+    {
+        $this->options['type'] = 'tel';
+        if (!isset($this->options['class'])) {
+            $this->options['class'] = 'form-control';
+        }
         if ($this->hasModel()) {
             echo Html::activeTextInput($this->model, $this->attribute, $this->options);
         } else {
@@ -27,15 +36,27 @@ class TelInput extends InputWidget {
         $this->registerClientScript();
     }
 
-    protected function registerClientScript() {
+    protected function registerClientScript()
+    {
         $view = $this->getView();
-        Asset::register($view);
+        $assets = Asset::register($view);
 
-        if ($this->placeholder)
-            $this->options['placeholder'] = $this->placeholder;
+        if ($this->utils) {
+            $this->jsOptions['utilsScript'] = $assets->baseUrl . 'js/utils.js';
+        }
 
-        $options = Json::encode($this->options);
-        $js[] = "$('#{$this->options['id']}').tagEditor({$options});";
+        //$this->jsOptions['initialCountry']= "auto";
+
+        /*$this->jsOptions['geoIpLookup']= new \yii\web\JsExpression("function(callback) {
+            $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
+                var countryCode = (resp && resp.country) ? resp.country : '';
+                callback(countryCode);
+            });
+        }");*/
+
+
+        $jsOptions = Json::encode($this->jsOptions);
+        $js[] = "$('#{$this->options['id']}').intlTelInput({$jsOptions});";
         $view->registerJs(implode("\n", $js));
     }
 
