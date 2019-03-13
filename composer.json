@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "jackocnr/intl-tel-input": "~13.0.0"
+        "jackocnr/intl-tel-input": "^13.0.0"
     },
     "autoload": {
         "psr-4": {
