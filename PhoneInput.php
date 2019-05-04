@@ -11,10 +11,11 @@ use panix\engine\Html;
 class PhoneInput extends InputWidget
 {
 
-    /** @var string HTML tag type of the widget input ("tel" by default) */
+
     public $htmlTagType = 'tel';
-    /** @var array Default widget options of the HTML tag */
+
     public $defaultOptions = ['autocomplete' => "off", 'class' => 'form-control'];
+
     /**
      * @link https://github.com/jackocnr/intl-tel-input#options More information about JS-widget options.
      * @var array Options of the JS-widget
@@ -33,16 +34,17 @@ class PhoneInput extends InputWidget
         // if ($this->utils) {
         $this->jsOptions['utilsScript'] = $assets->baseUrl . '/js/utils.js';
         // }
-        $this->jsOptions['autoHideDialCode']=false;
-        $this->jsOptions['initialCountry']='auto';
+        $this->jsOptions['autoHideDialCode'] = false;
+        $this->jsOptions['initialCountry'] = 'auto';
 
-
-        $this->jsOptions['geoIpLookup']= new JsExpression('function(success, failure) {
-            $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-                var countryCode = (resp && resp.country) ? resp.country : "";
-                success(countryCode);
-            });
-        }');
+        if (isset($this->jsOptions['initialCountry']) && $this->jsOptions['initialCountry'] == 'auto') {
+            $this->jsOptions['geoIpLookup'] = new JsExpression('function(success, failure) {
+                $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : "";
+                    success(countryCode);
+                });
+            }');
+        }
 
         $jsOptions = $this->jsOptions ? Json::encode($this->jsOptions) : "";
 
