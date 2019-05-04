@@ -11,7 +11,7 @@ use yii\helpers\Json;
 
 /**
  * Validates the given attribute value with the PhoneNumberUtil library.
- * @package borales\extensions\phoneInput
+ * @package panix\ext\telinput
  */
 class PhoneInputValidator extends Validator
 {

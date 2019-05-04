@@ -46,7 +46,7 @@ JS;
     });
 })(jQuery);
 JS;
-            $this->view->registerJs($js);
+           // $this->view->registerJs($js);
         }
     }
 

@@ -11,7 +11,7 @@ use yii\db\BaseActiveRecord;
 
 /**
  * Behavior of the phone input widget. Auto-formats the phone value for the JS-widget.
- * @package borales\extensions\phoneInput
+ * @package panix\ext\telinput
  */
 class PhoneInputBehavior extends AttributeBehavior
 {
