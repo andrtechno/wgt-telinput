@@ -9,14 +9,12 @@
 
 namespace panix\ext\telinput;
 
-use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
-use yii\web\View;
 use yii\widgets\InputWidget;
 use panix\engine\Html;
 
-class TelInput extends InputWidget
+class PhoneInput extends InputWidget
 {
 
     /** @var string HTML tag type of the widget input ("tel" by default) */
