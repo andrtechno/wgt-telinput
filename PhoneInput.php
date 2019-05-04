@@ -4,6 +4,7 @@ namespace panix\ext\telinput;
 
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+use yii\web\JsExpression;
 use yii\widgets\InputWidget;
 use panix\engine\Html;
 
@@ -18,35 +19,40 @@ class PhoneInput extends InputWidget
      * @link https://github.com/jackocnr/intl-tel-input#options More information about JS-widget options.
      * @var array Options of the JS-widget
      */
-    public $jsOptions = [];
+    public $jsOptions = [
+        'autoPlaceholder' => 'aggressive',
+        'onlyCountries' => ['ua', 'ru', 'by'],
+    ];
 
     public function init()
     {
         parent::init();
-        Asset::register($this->view);
+        $assets = Asset::register($this->view);
         $id = ArrayHelper::getValue($this->options, 'id');
+
+        // if ($this->utils) {
+        $this->jsOptions['utilsScript'] = $assets->baseUrl . '/js/utils.js';
+        // }
+        $this->jsOptions['autoHideDialCode']=false;
+        $this->jsOptions['initialCountry']='auto';
+
+
+        $this->jsOptions['geoIpLookup']= new JsExpression('function(success, failure) {
+            $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+                var countryCode = (resp && resp.country) ? resp.country : "";
+                success(countryCode);
+            });
+        }');
+
         $jsOptions = $this->jsOptions ? Json::encode($this->jsOptions) : "";
-        $jsInit = <<<JS
-(function ($) {
-    "use strict";
-    $('#$id').intlTelInput($jsOptions);
-})(jQuery);
-JS;
-        $this->view->registerJs($jsInit);
+
+        $this->view->registerJs("$('#$id').intlTelInput($jsOptions)");
         if ($this->hasModel()) {
-            $js = <<<JS
-(function ($) {
-    "use strict";
-    $('#$id')
-    .parents('form')
-    .on('submit', function() {
-        $('#$id')
-        .val($('#$id')
-        .intlTelInput('getNumber'));
-    });
-})(jQuery);
-JS;
-           // $this->view->registerJs($js);
+            $this->view->registerJs("
+                $('#$id').parents('form').on('submit', function() {
+                    $('#$id').val($('#$id').intlTelInput('getNumber'));
+                });
+            ");
         }
     }
 
