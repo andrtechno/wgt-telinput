@@ -10,57 +10,65 @@
 namespace panix\ext\telinput;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+use yii\web\View;
 use yii\widgets\InputWidget;
 use panix\engine\Html;
 
 class TelInput extends InputWidget
 {
 
-    public $placeholder;
-    public $utils = true;
-    public $jsOptions = [
-        'preferredCountries' => ['ua', 'ru'],
+    /** @var string HTML tag type of the widget input ("tel" by default) */
+    public $htmlTagType = 'tel';
+    /** @var array Default widget options of the HTML tag */
+    public $defaultOptions = ['autocomplete' => "off",'class'=>'form-control'];
+    /**
+     * @link https://github.com/jackocnr/intl-tel-input#options More information about JS-widget options.
+     * @var array Options of the JS-widget
+     */
+    public $jsOptions = [];
 
-    ];
-
-    public function run()
+    public function init()
     {
-        $this->options['type'] = 'tel';
-        if (!isset($this->options['class'])) {
-            $this->options['class'] = 'form-control';
-        }
+        parent::init();
+        Asset::register($this->view);
+        $id = ArrayHelper::getValue($this->options, 'id');
+        $jsOptions = $this->jsOptions ? Json::encode($this->jsOptions) : "";
+        $jsInit = <<<JS
+(function ($) {
+    "use strict";
+    $('#$id').intlTelInput($jsOptions);
+})(jQuery);
+JS;
+        $this->view->registerJs($jsInit);
         if ($this->hasModel()) {
-            echo Html::activeTextInput($this->model, $this->attribute, $this->options);
-        } else {
-            echo Html::textInput($this->name, $this->value, $this->options);
+            $js = <<<JS
+(function ($) {
+    "use strict";
+    $('#$id')
+    .parents('form')
+    .on('submit', function() {
+        $('#$id')
+        .val($('#$id')
+        .intlTelInput('getNumber'));
+    });
+})(jQuery);
+JS;
+            $this->view->registerJs($js);
         }
-        $this->registerClientScript();
     }
 
-    protected function registerClientScript()
+    /**
+     * @return string
+     */
+    public function run()
     {
-        $view = $this->getView();
-        $assets = Asset::register($view);
-
-        if ($this->utils) {
-            $this->jsOptions['utilsScript'] = $assets->baseUrl . '/js/utils.js';
+        $options = ArrayHelper::merge($this->defaultOptions, $this->options);
+        if ($this->hasModel()) {
+            return Html::activeInput($this->htmlTagType, $this->model, $this->attribute, $options);
         }
-
-        //$this->jsOptions['initialCountry']= "auto";
-
-        /*$this->jsOptions['geoIpLookup']= new \yii\web\JsExpression("function(callback) {
-            $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                var countryCode = (resp && resp.country) ? resp.country : '';
-                callback(countryCode);
-            });
-        }");*/
-
-
-        $jsOptions = Json::encode($this->jsOptions);
-        //$js[] = "$('#{$this->options['id']}').intlTelInput({utilsScript:'$assets->baseUrl/js/utils.js'});";
-        $js[] = "$('#{$this->options['id']}').intlTelInput({$jsOptions});";
-        $view->registerJs(implode("\n", $js));
+        return Html::input($this->htmlTagType, $this->name, $this->value, $options);
     }
 
 }

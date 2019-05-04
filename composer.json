@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "jackocnr/intl-tel-input": "~15.0.*"
+        "bower-asset/intl-tel-input": "~15.0.*"
     },
     "autoload": {
         "psr-4": {

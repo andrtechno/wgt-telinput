@@ -14,18 +14,19 @@ use yii\web\AssetBundle;
 
 class Asset extends AssetBundle {
 
-    public $sourcePath = '@vendor/jackocnr/intl-tel-input/build';
+    public $sourcePath = '@bower/intl-tel-input/build';
     
     public $css = [
         YII_ENV_DEV ? 'css/intlTelInput.css' : 'css/intlTelInput.min.css',
     ];
     
     public $js = [
+        'js/utils.js',
         YII_ENV_DEV ? 'js/intlTelInput.js' : 'js/intlTelInput.min.js',
-        'js/utils.js'
+
     ];
     public $depends = [
-        'yii\jui\JuiAsset',
+        'yii\web\JqueryAsset'
     ];
 
 }
