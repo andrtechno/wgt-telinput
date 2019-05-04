@@ -1,12 +1,5 @@
 <?php
 
-/**
- *
- * @author PIXELION CMS development team <dev@pixelion.com.ua>
- * @link http://pixelion.com.ua PIXELION CMS
- * @see https://github.com/jackocnr/intl-tel-input#options
- */
-
 namespace panix\ext\telinput;
 
 use yii\helpers\ArrayHelper;
@@ -20,7 +13,7 @@ class PhoneInput extends InputWidget
     /** @var string HTML tag type of the widget input ("tel" by default) */
     public $htmlTagType = 'tel';
     /** @var array Default widget options of the HTML tag */
-    public $defaultOptions = ['autocomplete' => "off",'class'=>'form-control'];
+    public $defaultOptions = ['autocomplete' => "off", 'class' => 'form-control'];
     /**
      * @link https://github.com/jackocnr/intl-tel-input#options More information about JS-widget options.
      * @var array Options of the JS-widget
