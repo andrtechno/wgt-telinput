@@ -12,7 +12,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist panix/wgt-telinput "*"
+php composer require --prefer-dist panix/wgt-telinput "*"
 ```
 
 or add
