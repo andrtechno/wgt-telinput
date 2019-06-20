@@ -2,6 +2,7 @@
 
 namespace panix\ext\telinput;
 
+use panix\engine\CMS;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\JsExpression;
@@ -23,6 +24,8 @@ class PhoneInput extends InputWidget
     public $jsOptions = [
         'autoPlaceholder' => 'aggressive',
         'onlyCountries' => ['ua', 'ru', 'by'],
+        'nationalMode'=>true,
+        //'separateDialCode'=>true,
     ];
 
     public function init()
@@ -32,30 +35,35 @@ class PhoneInput extends InputWidget
         $id = ArrayHelper::getValue($this->options, 'id');
 
         // if ($this->utils) {
-        $this->jsOptions['utilsScript'] = $assets->baseUrl . '/js/utils.js';
+        $this->jsOptions['utilsScript'] = $assets->baseUrl . '/js/utils.js?'.time();
         // }
-        $this->jsOptions['autoHideDialCode'] = false;
-        $this->jsOptions['initialCountry'] = 'auto';
-
+        //$this->jsOptions['autoHideDialCode'] = false;
+       $this->jsOptions['initialCountry'] = 'auto';
+        $hash = CMS::hash($id);
         if (isset($this->jsOptions['initialCountry']) && $this->jsOptions['initialCountry'] == 'auto') {
-            $this->jsOptions['geoIpLookup'] = new JsExpression('function(success, failure) {
-                $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-                    var countryCode = (resp && resp.country) ? resp.country : "";
-                    success(countryCode);
+            $this->jsOptions['geoIpLookup'] = new JsExpression("function(callback) {
+                $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : '';
+                    callback(countryCode);
                 });
-            }');
+            }");
         }
 
         $jsOptions = $this->jsOptions ? Json::encode($this->jsOptions) : "";
 
-        $this->view->registerJs("$('#$id').intlTelInput($jsOptions)");
-        if ($this->hasModel()) {
+        $this->view->registerJs("var intlTelInput{$hash} = $('#$id').intlTelInput($jsOptions);");
+
+
+        //if ($this->hasModel()) {
             $this->view->registerJs("
                 $('#$id').parents('form').on('submit', function() {
+                    var intlNumber = $('#$id').intlTelInput('getNumber');
+                    var intlNumberType = $('#$id').intlTelInput('getCountryData');
                     $('#$id').val($('#$id').intlTelInput('getNumber'));
+                    //console.log(intlNumber,intlNumberType);
                 });
             ");
-        }
+       // }
     }
 
     /**
