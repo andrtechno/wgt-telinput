@@ -38,7 +38,9 @@ class PhoneInput extends InputWidget
         $this->jsOptions['utilsScript'] = $assets->baseUrl . '/js/utils.js?'.time();
         // }
         //$this->jsOptions['autoHideDialCode'] = false;
-       $this->jsOptions['initialCountry'] = 'auto';
+        $this->jsOptions['initialCountry'] = 'auto';
+        $this->jsOptions['hiddenInput'] = 'full_phone';
+
         $hash = CMS::hash($id);
         if (isset($this->jsOptions['initialCountry']) && $this->jsOptions['initialCountry'] == 'auto') {
             $this->jsOptions['geoIpLookup'] = new JsExpression("function(callback) {
