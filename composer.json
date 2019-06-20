@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "bower-asset/intl-tel-input": "^15.0",
+        "bower-asset/intl-tel-input": "^15.1",
         "giggsey/libphonenumber-for-php": "^8"
     },
     "autoload": {
