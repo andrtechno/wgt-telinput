@@ -39,7 +39,7 @@ class PhoneInput extends InputWidget
         // }
         //$this->jsOptions['autoHideDialCode'] = false;
         $this->jsOptions['initialCountry'] = 'auto';
-        $this->jsOptions['hiddenInput'] = 'full_phone';
+        //$this->jsOptions['hiddenInput'] = 'full_phone';
 
         $hash = CMS::hash($id);
         if (isset($this->jsOptions['initialCountry']) && $this->jsOptions['initialCountry'] == 'auto') {
