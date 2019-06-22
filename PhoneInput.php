@@ -24,7 +24,7 @@ class PhoneInput extends InputWidget
     public $jsOptions = [
         'autoPlaceholder' => 'aggressive',
         'onlyCountries' => ['ua', 'ru', 'by'],
-        'nationalMode'=>true,
+        'nationalMode' => true,
         //'separateDialCode'=>true,
     ];
 
@@ -35,7 +35,7 @@ class PhoneInput extends InputWidget
         $id = ArrayHelper::getValue($this->options, 'id');
 
         // if ($this->utils) {
-        $this->jsOptions['utilsScript'] = $assets->baseUrl . '/js/utils.js?'.time();
+        $this->jsOptions['utilsScript'] = $assets->baseUrl . '/js/utils.js?' . time();
         // }
         //$this->jsOptions['autoHideDialCode'] = false;
         $this->jsOptions['initialCountry'] = 'auto';
@@ -57,7 +57,7 @@ class PhoneInput extends InputWidget
 
 
         //if ($this->hasModel()) {
-            $this->view->registerJs("
+        $this->view->registerJs("
                 $('#$id').parents('form').on('submit', function() {
                     var intlNumber = $('#$id').intlTelInput('getNumber');
                     var intlNumberType = $('#$id').intlTelInput('getCountryData');
@@ -65,7 +65,7 @@ class PhoneInput extends InputWidget
                     //console.log(intlNumber,intlNumberType);
                 });
             ");
-       // }
+        // }
     }
 
     /**
