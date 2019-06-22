@@ -22,9 +22,10 @@ class PhoneInput extends InputWidget
      * @var array Options of the JS-widget
      */
     public $jsOptions = [
-        'autoPlaceholder' => 'aggressive',
+        'autoPlaceholder' => 'aggressive', //polite, aggressive
         'onlyCountries' => ['ua', 'ru', 'by'],
         'nationalMode' => true,
+        //'formatOnDisplay'=>false
         //'separateDialCode'=>true,
     ];
 
@@ -62,6 +63,8 @@ class PhoneInput extends InputWidget
                     var intlNumber = $('#$id').intlTelInput('getNumber');
                     var intlNumberType = $('#$id').intlTelInput('getCountryData');
                     $('#$id').val($('#$id').intlTelInput('getNumber'));
+                   
+                   //$('#$id').intlTelInput('getNumber');
                     //console.log(intlNumber,intlNumberType);
                 });
             ");
