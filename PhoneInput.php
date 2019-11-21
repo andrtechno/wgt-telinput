@@ -6,6 +6,7 @@ use panix\engine\CMS;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\JsExpression;
+use yii\web\View;
 use yii\widgets\InputWidget;
 use panix\engine\Html;
 
@@ -54,7 +55,7 @@ class PhoneInput extends InputWidget
 
         $jsOptions = $this->jsOptions ? Json::encode($this->jsOptions) : "";
 
-        $this->view->registerJs("var intlTelInput{$hash} = $('#$id').intlTelInput($jsOptions);");
+        $this->view->registerJs("var intlTelInput{$hash} = $('#$id').intlTelInput($jsOptions);",View::POS_END);
 
 
         //if ($this->hasModel()) {
@@ -67,7 +68,7 @@ class PhoneInput extends InputWidget
                    //$('#$id').intlTelInput('getNumber');
                     //console.log(intlNumber,intlNumberType);
                 });
-            ");
+            ",View::POS_END);
         // }
     }
 
