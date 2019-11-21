@@ -12,6 +12,10 @@ namespace panix\ext\telinput;
 
 use yii\web\AssetBundle;
 
+/**
+ * Class Asset
+ * @package panix\ext\telinput
+ */
 class Asset extends AssetBundle {
 
     public $sourcePath = '@bower/intl-tel-input/build';
@@ -21,13 +25,11 @@ class Asset extends AssetBundle {
     ];
     
     public $js = [
-
         YII_ENV_DEV ? 'js/intlTelInput-jquery.js' : 'js/intlTelInput-jquery.min.js',
-
-
     ];
+
     public $depends = [
-        'yii\web\JqueryAsset'
+        'panix\engine\assets\CommonAsset'
     ];
 
 }
