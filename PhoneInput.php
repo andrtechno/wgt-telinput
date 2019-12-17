@@ -63,8 +63,8 @@ class PhoneInput extends InputWidget
                 $('#$id').parents('form').on('submit', function() {
                     var intlNumber = $('#$id').intlTelInput('getNumber');
                     var intlNumberType = $('#$id').intlTelInput('getCountryData');
-                    $('#$id').val($('#$id').intlTelInput('getNumber'));
-                   
+                    $('#$id').val(intlNumber);
+                   console.log(intlNumber,intlNumberType);
                    //$('#$id').intlTelInput('getNumber');
                     //console.log(intlNumber,intlNumberType);
                 });
