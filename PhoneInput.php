@@ -14,21 +14,13 @@ class PhoneInput extends InputWidget
 {
 
 
-    public $htmlTagType = 'tel';
-
     public $defaultOptions = ['autocomplete' => "off", 'class' => 'form-control'];
 
     /**
      * @link https://github.com/jackocnr/intl-tel-input#options More information about JS-widget options.
      * @var array Options of the JS-widget
      */
-    public $jsOptions = [
-        'autoPlaceholder' => 'aggressive', //polite, aggressive
-        'onlyCountries' => ['ua', 'ru', 'by'],
-        'nationalMode' => true,
-        //'formatOnDisplay'=>false
-        //'separateDialCode'=>true,
-    ];
+    public $jsOptions = [];
 
     public function init()
     {
@@ -36,12 +28,18 @@ class PhoneInput extends InputWidget
         $assets = Asset::register($this->view);
         $id = ArrayHelper::getValue($this->options, 'id');
 
+
         // if ($this->utils) {
         $this->jsOptions['utilsScript'] = $assets->baseUrl . '/js/utils.js?' . time();
         // }
-        //$this->jsOptions['autoHideDialCode'] = false;
+        $this->jsOptions['autoPlaceholder'] = 'aggressive'; //polite, aggressive
+        $this->jsOptions['onlyCountries'] = ['ua', 'ru', 'by'];
+        $this->jsOptions['nationalMode'] = true;
         $this->jsOptions['initialCountry'] = 'auto';
-        //$this->jsOptions['hiddenInput'] = 'full_phone';
+        //$this->jsOptions['autoHideDialCode'] = false;
+        if(!isset($this->jsOptions['hiddenInput']))
+            $this->jsOptions['hiddenInput'] = ($this->hasModel()) ? $this->attribute : $this->name;
+
 
         $hash = CMS::hash($id);
         if (isset($this->jsOptions['initialCountry']) && $this->jsOptions['initialCountry'] == 'auto') {
@@ -52,24 +50,29 @@ class PhoneInput extends InputWidget
                 });
             }");
         }
+        $jsOptions = Json::encode($this->jsOptions);
 
-        $jsOptions = $this->jsOptions ? Json::encode($this->jsOptions) : "";
-
-        $this->view->registerJs("var intlTelInput{$hash} = $('#$id').intlTelInput($jsOptions);",View::POS_END);
+        $this->view->registerJs("var intlTelInput{$hash} = $('#$id').intlTelInput($jsOptions);", View::POS_END);
 
 
-        //if ($this->hasModel()) {
         $this->view->registerJs("
-                $('#$id').parents('form').on('submit', function() {
-                    var intlNumber = $('#$id').intlTelInput('getNumber');
-                    var intlNumberType = $('#$id').intlTelInput('getCountryData');
-                    $('#$id').val(intlNumber);
-                   console.log(intlNumber,intlNumberType);
-                   //$('#$id').intlTelInput('getNumber');
-                    //console.log(intlNumber,intlNumberType);
-                });
-            ",View::POS_END);
-        // }
+            var input = $('#$id');
+            input.parents('form').on('submit', function() {
+                var intlNumber = input.intlTelInput('getNumber');
+                var intlNumberType = input.intlTelInput('getCountryData');
+                console.log(intlNumber,intlNumberType);
+                input.next().val(intlNumber);
+            });
+            
+            input.on('change', function() {
+                var intlNumber = input.intlTelInput('getNumber');
+                var intlNumberType = input.intlTelInput('getCountryData');
+                console.log(intlNumber,intlNumberType);
+                input.next().val(intlNumber);
+            });
+                
+                
+            ", View::POS_END);
     }
 
     /**
@@ -79,9 +82,9 @@ class PhoneInput extends InputWidget
     {
         $options = ArrayHelper::merge($this->defaultOptions, $this->options);
         if ($this->hasModel()) {
-            return Html::activeInput($this->htmlTagType, $this->model, $this->attribute, $options);
+            return Html::activeInput('tel', $this->model, $this->attribute, $options);
         }
-        return Html::input($this->htmlTagType, $this->name, $this->value, $options);
+        return Html::input('tel', $this->name, $this->value, $options);
     }
 
 }
