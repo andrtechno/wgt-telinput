@@ -49,20 +49,20 @@ class PhoneInput extends InputWidget
             }");
         }
         $jsOptions = Json::encode($this->jsOptions);
-
-        $this->view->registerJs("var iti{$this->getId()} = $('#$id').intlTelInput($jsOptions);", View::POS_END);
+        $hash = md5($this->getId());
+        $this->view->registerJs("var iti{$hash} = $('#$id').intlTelInput($jsOptions);", View::POS_END);
 
 
         $this->view->registerJs("
-            var input{$this->getId()} = $('#$id');
-            input{$this->getId()}.parents('form').on('submit', function() {
-                //var intlNumberType{$this->getId()} = input{$this->getId()}.intlTelInput('getCountryData');
-                input{$this->getId()}.next().val(iti{$this->getId()}.intlTelInput('getNumber'));
+            var input{$hash} = $('#$id');
+            input{$hash}.parents('form').on('submit', function() {
+                //var intlNumberType{$hash} = input{$hash}.intlTelInput('getCountryData');
+                input{$hash}.next().val(iti{$hash}.intlTelInput('getNumber'));
             });
             
-            input{$this->getId()}.on('change', function() {
-               // var intlNumberType{$this->getId()} = input{$this->getId()}.intlTelInput('getCountryData');
-                input{$this->getId()}.next().val(iti{$this->getId()}.intlTelInput('getNumber'));
+            input{$hash}.on('change', function() {
+               // var intlNumberType{$hash} = input{$hash}.intlTelInput('getCountryData');
+                input{$hash}.next().val(iti{$hash}.intlTelInput('getNumber'));
             });
         ", View::POS_END);
     }
