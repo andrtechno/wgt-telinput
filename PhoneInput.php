@@ -31,10 +31,19 @@ class PhoneInput extends InputWidget
         // if ($this->utils) {
         $this->jsOptions['utilsScript'] = $assets->baseUrl . '/js/utils.js?' . time();
         // }
-        $this->jsOptions['autoPlaceholder'] = 'aggressive'; //polite, aggressive
-        $this->jsOptions['onlyCountries'] = ['ua', 'ru', 'by'];
-        $this->jsOptions['nationalMode'] = true;
-        $this->jsOptions['initialCountry'] = 'auto';
+
+        if(!isset($this->jsOptions['autoPlaceholder']))
+            $this->jsOptions['autoPlaceholder'] = 'aggressive'; //polite, aggressive
+
+        if(!isset($this->jsOptions['onlyCountries']))
+            $this->jsOptions['onlyCountries'] = ['ua', 'ru', 'by'];
+
+        if(!isset($this->jsOptions['nationalMode']))
+            $this->jsOptions['nationalMode'] = true;
+
+        if(!isset($this->jsOptions['initialCountry']))
+            $this->jsOptions['initialCountry'] = 'auto';
+
         //$this->jsOptions['autoHideDialCode'] = false;
         if(!isset($this->jsOptions['hiddenInput']))
             $this->jsOptions['hiddenInput'] = ($this->hasModel()) ? $this->attribute : $this->name;
