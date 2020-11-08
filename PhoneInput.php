@@ -64,7 +64,7 @@ class PhoneInput extends InputWidget
 
         $this->view->registerJs("
             var input{$hash} = $('#$id');
-            input{$hash}.parents('form').on('submit', function() {
+            input{$hash}.closest('form').on('submit', function() {
                 //var intlNumberType{$hash} = input{$hash}.intlTelInput('getCountryData');
                 input{$hash}.next().val(iti{$hash}.intlTelInput('getNumber'));
             });
