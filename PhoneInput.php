@@ -60,6 +60,7 @@ class PhoneInput extends InputWidget
                 });
             }");
         }
+
         $jsOptions = Json::encode($this->jsOptions);
         $hash = md5($this->getId());
 
