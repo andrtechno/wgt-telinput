@@ -2,6 +2,7 @@
 
 namespace panix\ext\telinput;
 
+use panix\engine\CMS;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\JsExpression;
@@ -27,6 +28,8 @@ class PhoneInput extends InputWidget
         $assets = Asset::register($this->view);
         $id = ArrayHelper::getValue($this->options, 'id');
 
+        if(!isset($this->options['autocomplete']))
+            $this->options['autocomplete'] = 'ac-'.CMS::gen(5);
 
         // if ($this->utils) {
         $this->jsOptions['utilsScript'] = $assets->baseUrl . '/js/utils.js?' . time();
