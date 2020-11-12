@@ -59,11 +59,15 @@ class PhoneInput extends InputWidget
         }
         $jsOptions = Json::encode($this->jsOptions);
         $hash = md5($this->getId());
-        $this->view->registerJs("var iti{$hash} = $('#$id').intlTelInput($jsOptions);", View::POS_END);
 
+        \yii\widgets\MaskedInputAsset::register($this->view);
 
         $this->view->registerJs("
             var input{$hash} = $('#$id');
+            var iti{$hash} = input{$hash}.intlTelInput($jsOptions);
+        
+        
+
             input{$hash}.closest('form').on('submit', function() {
                 //var intlNumberType{$hash} = input{$hash}.intlTelInput('getCountryData');
                 input{$hash}.next().val(iti{$hash}.intlTelInput('getNumber'));
@@ -72,8 +76,38 @@ class PhoneInput extends InputWidget
             input{$hash}.on('change', function() {
                // var intlNumberType{$hash} = input{$hash}.intlTelInput('getCountryData');
                 input{$hash}.next().val(iti{$hash}.intlTelInput('getNumber'));
+
             });
+            
+            
+            input{$hash}.on('countrychange', function() {
+
+if($(this).attr('placeholder') == undefined){
+    var placeholder = '999 999 9999';
+}else{
+    var placeholder = $(this).attr('placeholder');
+}
+
+placeholder = placeholder.replace(/(\s)/gm,'-');
+placeholder = placeholder.replace(/(\d)/gm,'9');
+var mask = '['+placeholder+']';
+  
+input{$hash}.inputmask({mask:mask});
+var input = document.querySelector('#$id');
+console.log(window.intlTelInputGlobals.getInstance(input));
+
+                 
+            });
+
         ", View::POS_END);
+
+
+
+
+
+
+
+
     }
 
     /**
