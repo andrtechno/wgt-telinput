@@ -26,6 +26,7 @@ class Asset extends AssetBundle {
     
     public $js = [
         YII_ENV_DEV ? 'js/intlTelInput-jquery.js' : 'js/intlTelInput-jquery.min.js',
+        // YII_ENV_DEV ? 'js/intlTelInput.js' : 'js/intlTelInput.min.js',
     ];
 
     public $depends = [

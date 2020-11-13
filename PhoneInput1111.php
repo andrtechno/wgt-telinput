@@ -10,7 +10,7 @@ use yii\web\View;
 use yii\widgets\InputWidget;
 use panix\engine\Html;
 
-class PhoneInput extends InputWidget
+class PhoneInput1111 extends InputWidget
 {
 
 
@@ -51,9 +51,7 @@ class PhoneInput extends InputWidget
         if(!isset($this->jsOptions['initialCountry']))
             $this->jsOptions['initialCountry'] = 'ua';
 
-        //  $this->jsOptions['autoHideDialCode'] = false;
-         $this->jsOptions['separateDialCode'] = true;
-
+        //$this->jsOptions['autoHideDialCode'] = false;
         if(!isset($this->jsOptions['hiddenInput']))
             $this->jsOptions['hiddenInput'] = ($this->hasModel()) ? $this->attribute : $this->name;
 
@@ -68,10 +66,10 @@ class PhoneInput extends InputWidget
         }*/
 
 
-        //$this->jsOptions['customPlaceholder'] = new JsExpression("function(selectedCountryPlaceholder, selectedCountryData) {
-     // console.log(selectedCountryData);
-     //   return \"e.g. \" + selectedCountryPlaceholder;
-    //}");
+        $this->jsOptions['customPlaceholder'] = new JsExpression("function(selectedCountryPlaceholder, selectedCountryData) {
+      console.log(selectedCountryData);
+        return \"e.g. \" + selectedCountryPlaceholder;
+    }");
 
 
 
@@ -82,19 +80,19 @@ class PhoneInput extends InputWidget
 
         $this->view->registerJs("
             //var input{$hash} = $('#$id');
-
+            var input = document.querySelector('#$id');
             var iti{$hash} = $('#$id').intlTelInput($jsOptions);
 
-
+                  console.log('isComplete2',iti{$hash}.intlTelInput('placeholderNumberType'));
                   
                   
-
+                  var iti = intlTelInput(input)
                   
-
-                  console.log(iti{$hash});
+                 // var countryData = iti.getSelectedCountryData();
+                  console.log(iti{$hash}.getSelectedCountryData());
             function addMask(input){
                 if(input.attr('placeholder') == undefined){
-                    var placeholder = '99 999 9999';
+                    var placeholder = '999 999 9999';
                 }else{
                     var placeholder = input.attr('placeholder');
                 }
@@ -104,17 +102,18 @@ class PhoneInput extends InputWidget
                   
                 var masked = input.inputmask({
                     mask:mask,
-                    //greedy: false,
-                    //onBeforePaste: function (pastedValue, opts) {
+                    greedy: false,
+                    onBeforePaste: function (pastedValue, opts) {
                      // pastedValue = pastedValue.toLowerCase();
-                   //   console.log(pastedValue);
-                   // },
+                      console.log('pastedValue');
+                      //return pastedValue.replace(\"380\", \"999\");
+                    },
                 });
                 
                 if (input.inputmask('isComplete')){
 
                   //console.log('isComplete',iti{$hash}.intlTelInput('getNumber'));
-                //  input.inputmask('setvalue', 123);
+                  input.inputmask('setvalue', 123);
                 }
 
             }
@@ -138,8 +137,6 @@ class PhoneInput extends InputWidget
             $('#$id').on('countrychange', function() {
                 addMask($(this));
             });
-
-
 
         ", View::POS_END);
 
