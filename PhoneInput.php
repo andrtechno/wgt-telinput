@@ -81,17 +81,9 @@ class PhoneInput extends InputWidget
         \yii\widgets\MaskedInputAsset::register($this->view);
 
         $this->view->registerJs("
-            //var input{$hash} = $('#$id');
 
             var iti{$hash} = $('#$id').intlTelInput($jsOptions);
 
-
-                  
-                  
-
-                  
-
-                  console.log(iti{$hash});
             function addMask(input){
                 if(input.attr('placeholder') == undefined){
                     var placeholder = '99 999 9999';
@@ -104,37 +96,20 @@ class PhoneInput extends InputWidget
                   
                 var masked = input.inputmask({
                     mask:mask,
-                    //greedy: false,
-                    //onBeforePaste: function (pastedValue, opts) {
-                     // pastedValue = pastedValue.toLowerCase();
-                   //   console.log(pastedValue);
-                   // },
                 });
-                
-                if (input.inputmask('isComplete')){
-
-                  //console.log('isComplete',iti{$hash}.intlTelInput('getNumber'));
-                //  input.inputmask('setvalue', 123);
-                }
 
             }
+            
             addMask($('#$id'));
+            
             $('#$id').closest('form').on('submit', function() {
-                //var intlNumberType{$hash} = $('#$id').intlTelInput('getCountryData');
                 $('#$id').next().val(iti{$hash}.intlTelInput('getNumber'));
             });
             
             $('#$id').on('change', function() {
-               // var intlNumberType{$hash} = $('#$id').intlTelInput('getCountryData');
                 $('#$id').next().val(iti{$hash}.intlTelInput('getNumber'));
-
             });
             
-
-
-
-
-
             $('#$id').on('countrychange', function() {
                 addMask($(this));
             });
