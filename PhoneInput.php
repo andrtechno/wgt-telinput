@@ -101,6 +101,10 @@ class PhoneInput extends InputWidget
             }
             
             addMask($('#$id'));
+
+            $('#$id').closest('form').on('beforeValidateAttribute', function() {
+                $('#$id').next().val(iti{$hash}.intlTelInput('getNumber'));
+            });
             
             $('#$id').closest('form').on('submit', function() {
                 $('#$id').next().val(iti{$hash}.intlTelInput('getNumber'));
