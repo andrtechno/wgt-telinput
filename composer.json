@@ -3,7 +3,7 @@
     "description": "Widget telinput",
     "keywords": ["pixelion-cms", "extension", "widget", "form", "telinput"],
     "homepage": "https://github.com/andrtechno/wgt-telinput",
-    "type": "yii2-extension",
+    "type": "pixelion-component",
     "license": "MIT",
     "authors": [
         {
