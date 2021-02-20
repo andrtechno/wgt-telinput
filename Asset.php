@@ -30,7 +30,7 @@ class Asset extends AssetBundle {
     ];
 
     public $depends = [
-        'panix\engine\assets\CommonAsset'
+        'yii\jui\JuiAsset',
     ];
 
 }
