@@ -100,6 +100,11 @@ class PhoneInput extends InputWidget
 
             }
             
+            //display errors
+            var o = $('#$id').parent().parent().find('.invalid-feedback').clone();
+            $('#$id').parent().find('.iti__flag-container').css({height:$('#$id').outerHeight()});
+            $('#$id').parent().append(o);
+			
             addMask($('#$id'));
 
             $('#$id').closest('form').on('beforeValidateAttribute', function() {
