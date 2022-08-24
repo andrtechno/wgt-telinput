@@ -39,10 +39,10 @@ class PhoneInput extends InputWidget
             $this->jsOptions['autoPlaceholder'] = 'aggressive'; //polite, aggressive
 
         if(!isset($this->jsOptions['onlyCountries']))
-            $this->jsOptions['onlyCountries'] = ['by', 'ru', 'ua'];
+            $this->jsOptions['onlyCountries'] = ['ua'];
 
         //if(!isset($this->jsOptions['preferredCountries']))
-        //    $this->jsOptions['preferredCountries'] = ['ua', 'ru', 'by'];
+        //    $this->jsOptions['preferredCountries'] = ['ru', 'by'];
 
 
         if(!isset($this->jsOptions['nationalMode']))
